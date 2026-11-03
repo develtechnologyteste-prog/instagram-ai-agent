@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101018">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="IG Agent">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>Instagram AI Agent</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div><div class="eyebrow">PAINEL DE CONTROLE</div><h1>IG <span>Agent</span></h1></div>
+      <div class="status"><i></i> LOCAL</div>
+    </header>
+
+    <main>
+      <section class="hero panel">
+        <div class="hero-copy">
+          <p class="eyebrow">SEU ASSISTENTE DE CONTEÚDO</p>
+          <h2>Olá! Vamos cuidar da sua presença digital.</h2>
+          <p class="muted">Planejamento e memória ficam neste aparelho. A conexão com o Instagram ainda não está ativada.</p>
+          <button class="primary" id="newIdeaBtn">Criar ideia de conteúdo <b>＋</b></button>
+        </div>
+        <div class="orb" aria-hidden="true"><span>✦</span></div>
+      </section>
+
+      <section class="stats">
+        <article class="stat panel"><span class="muted">Ideias salvas</span><strong id="ideaCount">0</strong><small>neste aparelho</small></article>
+        <article class="stat panel"><span class="muted">Agendadas</span><strong id="scheduledCount">0</strong><small>no planejamento</small></article>
+        <article class="stat panel"><span class="muted">Publicadas</span><strong id="publishedCount">0</strong><small>marcadas por você</small></article>
+      </section>
+
+      <nav class="tabs" aria-label="Seções">
+        <button class="tab active" data-tab="studio">Estúdio</button>
+        <button class="tab" data-tab="planner">Planejamento</button>
+        <button class="tab" data-tab="memory">Memória</button>
+        <button class="tab" data-tab="settings">Configurações</button>
+      </nav>
+
+      <section class="view active" id="studio">
+        <div class="section-heading"><div><p class="eyebrow">MOTOR LOCAL</p><h2>Estúdio de conteúdo</h2></div><span class="pill">Sem API externa</span></div>
+        <article class="panel form-panel">
+          <label for="topic">Assunto da publicação</label>
+          <input id="topic" maxlength="120" placeholder="Ex.: 3 novidades de inteligência artificial">
+          <label for="format">Formato</label>
+          <select id="format"><option value="carrossel">Carrossel</option><option value="reels">Roteiro de Reel</option><option value="post">Post único</option><option value="story">Story</option></select>
+          <label for="language">Idioma</label>
+          <select id="language"><option value="pt">Português</option><option value="en">English</option><option value="both">Português + English</option></select>
+          <button class="primary full" id="generateBtn">Gerar rascunho local</button>
+          <p class="hint">O gerador desta versão usa estruturas e modelos locais. Não é um modelo generativo avançado.</p>
+        </article>
+        <article class="panel output-panel" id="outputPanel" hidden>
+          <div class="section-heading"><h3>Seu rascunho</h3><span class="pill">Editável</span></div>
+          <textarea id="draft" rows="9" aria-label="Rascunho de conteúdo"></textarea>
+          <div class="button-row">
+            <button class="secondary" id="copyBtn">Copiar texto</button>
+            <button class="primary" id="saveBtn">Salvar ideia</button>
+          </div>
+          <button class="share-btn" id="shareBtn">Compartilhar pelo iPhone ↗</button>
+        </article>
+      </section>
+
+      <section class="view" id="planner">
+        <div class="section-heading"><div><p class="eyebrow">ORGANIZAÇÃO</p><h2>Planejamento</h2></div></div>
+        <article class="panel form-panel">
+          <label for="planTitle">Título</label><input id="planTitle" placeholder="Ex.: IA na educação">
+          <label for="planDate">Data planejada</label><input id="planDate" type="date">
+          <button class="primary full" id="addPlanBtn">Adicionar ao planejamento</button>
+        </article>
+        <div id="planList" class="item-list"></div>
+      </section>
+
+      <section class="view" id="memory">
+        <div class="section-heading"><div><p class="eyebrow">DADOS NO APARELHO</p><h2>Memória do agente</h2></div></div>
+        <article class="panel form-panel">
+          <p class="muted">As ideias, preferências e tarefas salvas ficam no armazenamento local deste navegador. Não são sincronizadas com outros aparelhos.</p>
+          <label for="brandName">Nome da página</label><input id="brandName" placeholder="Nome da sua marca">
+          <label for="niche">Nicho</label><input id="niche" placeholder="Ex.: Tecnologia e inteligência artificial">
+          <label for="voice">Tom de comunicação</label><select id="voice"><option>Educativo e acessível</option><option>Profissional</option><option>Descontraído</option><option>Inspirador</option></select>
+          <button class="primary full" id="saveMemoryBtn">Salvar preferências</button>
+        </article>
+        <div id="ideasList" class="item-list"></div>
+      </section>
+
+      <section class="view" id="settings">
+        <div class="section-heading"><div><p class="eyebrow">CONTROLE</p><h2>Configurações</h2></div></div>
+        <article class="panel info-panel">
+          <h3>Estado desta versão</h3>
+          <p><b>Processamento:</b> local, baseado em regras e modelos de texto.</p>
+          <p><b>Instagram:</b> ainda não conectado.</p>
+          <p><b>Servidor próprio:</b> não utilizado.</p>
+          <p><b>Execução em segundo plano:</b> limitada pelo iOS; o agente trabalha quando o app está aberto.</p>
+          <p><b>Publicação:</b> compartilhamento manual nesta versão. A API oficial exige conta profissional, permissões e mídia acessível publicamente.</p>
+          <button class="secondary full" id="exportBtn">Exportar meus dados (JSON)</button>
+          <button class="danger full" id="clearBtn">Apagar dados locais</button>
+        </article>
+        <article class="panel info-panel">
+          <h3>Próximas integrações</h3>
+          <ul><li>Login oficial da Meta e permissões.</li><li>Importação de métricas da conta profissional.</li><li>Fluxo seguro de publicação.</li><li>Regras de respostas e aprovação.</li></ul>
+          <p class="hint">Não coloque senha do Instagram nem tokens de acesso neste protótipo.</p>
+        </article>
+      </section>
+    </main>
+    <footer>IG Agent · Protótipo local · v0.1</footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
